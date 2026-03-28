@@ -1,0 +1,195 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id          String  @id @default(uuid())
+  clerkUserId String  @unique
+  email       String  @unique
+  name        String?
+  imageUrl    String?
+
+  projects Project[]
+  aiModels AiModel[]
+  logs     PredictionLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Project {
+  id         String  @id @default(uuid())
+  userId     String
+  name       String
+  location   String?
+  latitude   Float?
+  longitude  Float?
+  capacityKW Float?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  weatherReadings    WeatherReading[]
+  generationReadings GenerationReading[]
+  forecasts          Forecast[]
+  alerts             Alert[]
+  reports            Report[]
+  logs               PredictionLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("projects")
+}
+
+model WeatherReading {
+  id        String   @id @default(uuid())
+  projectId String
+  timestamp DateTime
+
+  ambientTemp Float?
+  moduleTemp  Float?
+  irradiation Float?
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, timestamp])
+  @@index([projectId, timestamp])
+  @@map("weather_readings")
+}
+
+model GenerationReading {
+  id        String   @id @default(uuid())
+  projectId String
+  timestamp DateTime
+
+  sourceKey  String
+  dcPower    Float?
+  acPower    Float?
+  dailyYield Float?
+  totalYield Float?
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, sourceKey, timestamp])
+  @@index([projectId, timestamp])
+  @@index([sourceKey])
+  @@map("generation_readings")
+}
+
+model AiModel {
+  id          String    @id @default(uuid())
+  userId      String
+  name        String
+  type        ModelType
+  description String?
+  metrics     Json?
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  forecasts Forecast[]
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("ai_models")
+}
+
+model Forecast {
+  id          String   @id @default(uuid())
+  projectId   String
+  modelId     String
+  forecastFor DateTime
+
+  predicted Json
+  actual    Json?
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  model   AiModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([projectId, forecastFor])
+  @@index([modelId])
+  @@map("forecasts")
+}
+
+model PredictionLog {
+  id        String  @id @default(uuid())
+  userId    String
+  projectId String?
+  modelUsed String
+  inputSize Int?
+  status    String
+  errorMsg  String?
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([projectId])
+  @@map("prediction_logs")
+}
+
+model Alert {
+  id        String        @id @default(uuid())
+  projectId String
+  type      AlertType
+  message   String
+  severity  SeverityLevel
+  resolved  Boolean       @default(false)
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+  @@map("alerts")
+}
+
+model Report {
+  id        String @id @default(uuid())
+  projectId String
+  title     String
+  reportUrl String
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+  @@map("reports")
+}
+
+enum ModelType {
+  LSTM
+  GRU
+  CNN_LSTM
+  ENSEMBLE
+}
+
+enum AlertType {
+  LOW_OUTPUT
+  HIGH_TEMPERATURE
+  SENSOR_FAILURE
+  WEATHER_WARNING
+}
+
+enum SeverityLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
