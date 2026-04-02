@@ -4,7 +4,7 @@
 
 ---
 
-## 🎯 Purpose of the Project
+##  Purpose of the Project
 
 The primary goal of SolarIMS is to provide solar plant operators and homeowners with a **smart monitoring solution** that doesn't just show current data, but actively predicts future performance and identifies systemic issues before they lead to downtime.
 
@@ -13,7 +13,7 @@ By leveraging historical sensor data and environmental variables, SolarIMS helps
 - **Predictive Maintenance:** Using AI to detect faults (e.g., panel degradation, shading, or inverter issues).
 - **Informed Planning:** Providing hourly and daily energy forecasts to manage grid interactions.
 
-## 🚀 Key Features
+##  Key Features
 
 - **Real-time Monitoring:** Live tracking of power output, voltage, current, and environmental factors.
 - **AI Energy Forecasting:** Hourly and daily energy production predictions using trained ML models.
@@ -22,7 +22,7 @@ By leveraging historical sensor data and environmental variables, SolarIMS helps
 - **Automated Workflows:** Background jobs (via Inngest/Cron) to keep AI models and predictions up-to-date.
 - **Secure Access:** Enterprise-grade authentication powered by Clerk.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend & UI
 - **Framework:** [Next.js](https://nextjs.org/) (App Router)
@@ -39,7 +39,7 @@ By leveraging historical sensor data and environmental variables, SolarIMS helps
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 SolarIMS/
@@ -53,7 +53,7 @@ SolarIMS/
 └── .gitignore          # Root-level git rules
 ```
 
-## ⚙️ Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js 18+
@@ -89,7 +89,7 @@ SolarIMS/
 
 ---
 
-## 👨‍💻 Author
+##  Author
 **Aman Pal** - [GitHub](https://github.com/Amanpal0601)
 
 ---
