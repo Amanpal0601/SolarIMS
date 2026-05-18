@@ -17,7 +17,7 @@ By leveraging historical sensor data and environmental variables, SolarIMS helps
 
 - **Real-time Monitoring:** Live tracking of power output, voltage, current, and environmental factors.
 - **AI Energy Forecasting:** Hourly and daily energy production predictions using trained ML models.
-- **Intelligent Fault Detection:** Automatic identification of system anomalies and potential hardware failures.
+- **Intelligent Fault Detection:** Automatic identification of system anomalies and potential hardware failures in string or arrays of solar inverters.
 - **Interactive Dashboard:** Beautifully visualized data using dynamic charts and graphs.
 - **Automated Workflows:** Background jobs (via Inngest/Cron) to keep AI models and predictions up-to-date.
 - **Secure Access:** Enterprise-grade authentication powered by Clerk.
