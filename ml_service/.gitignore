@@ -1,0 +1,34 @@
+# Environments
+.env
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# PyCharm / IDE
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data
+data/
+*.csv
+
+# Logs & Temporary Files
+*log.txt
+fault_log*.txt
+prediction_log*.txt
+src/named_fault_log.txt
+
+# Configs
+ngrok.yml
+
+# OS generated files
+.DS_Store
+Thumbs.db

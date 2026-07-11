@@ -1,6 +1,6 @@
 "use server";
 
-const ML_API_URL = process.env.ML_API_URL;
+const ML_API_URL = process.env.ML_API_URL || "http://localhost:8000";
 
 export async function getLatestFaults() {
   try {
@@ -8,7 +8,6 @@ export async function getLatestFaults() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "69420",
       },
       body: JSON.stringify({
         temperature: 25.5,
@@ -29,7 +28,7 @@ export async function getLatestFaults() {
     return {
       success: false,
       raw: null,
-      error: "Could not reach the fault detection model. Make sure the Python server and ngrok tunnel are running.",
+      error: "Could not reach the fault detection model. Make sure the Python server is running on port 8000.",
     };
   }
 }

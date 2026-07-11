@@ -50,6 +50,11 @@ SolarIMS/
 │   ├── lib/            # Configuration (Prisma, DB utilities)
 │   ├── prisma/         # Database schema & migrations
 │   └── scripts/        # Data processing & setup scripts
+├── ml_service/         # AI/ML FastAPI Application
+│   ├── app.py          # FastAPI application entry point
+│   ├── src/            # ML training and prediction scripts
+│   ├── models/         # Pre-trained ML models
+│   └── tests/          # Tests for ML service
 └── .gitignore          # Root-level git rules
 ```
 
@@ -57,24 +62,33 @@ SolarIMS/
 
 ### Prerequisites
 - Node.js 18+
+- Python 3.9+
 - Supabase account & Project URL/Key
 - Clerk API Keys
 
 ### Running Locally
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Amanpal0601/SolarIMS.git
-   cd SolarIMS/solar
-   ```
+This repository contains both a Next.js frontend (`solar/`) and a Python FastAPI backend (`ml_service/`). You will need to run both concurrently.
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+#### 1. Setup the AI/ML Backend
+```bash
+cd SolarIMS/ml_service
+python -m venv venv
+# Windows: venv\Scripts\activate | Mac/Linux: source venv/bin/activate
+pip install -r requirements.txt
+python app.py
+```
+This will start the ML server on `http://localhost:8000`.
+
+#### 2. Setup the Next.js Frontend
+```bash
+cd SolarIMS/solar
+npm install
+```
 
 3. **Configure Environment Variables:**
    Create a `.env` file in the `solar/` directory and add your keys (refer to `.env.example` if available).
+   By default, the frontend expects the ML API to be at `http://localhost:8000`. If you run it on a different port, add `ML_API_URL=http://localhost:your_port` to your `.env` file.
 
 4. **Initialize Database:**
    ```bash
